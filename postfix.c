@@ -7,24 +7,6 @@ int top = -1;
 
 //Return 1 if stack is empty else return 0.
 int isEmpty() {
-	if(top<0)
-		return 1;
-	else
-		return 0;
-}
-
-//Push the character into stack
-void push(int x) {
-	if(top == STACK_MAX_SIZE - 1) {
-	printf("Stack is overflow.\n");
-	}else{
-		top = top+1;
-		stack[top] = x;
-	}
-}
-
-//pop a character from stack
-int pop() {
 	if(top < 0){
 		return -1;
 	}else
@@ -36,7 +18,13 @@ int pop() {
 //postfix expression is given as the parameter.
 void evaluatePostfix(char * e) {
 	int a,b,result;
-	
+	while(*e != '\0'){
+		if(isdigit(*e))
+			push(*e-'0');
+		else if (*e == '+' ||*e == '-' || *e == '*' || *e == '/' || *e == '%') {
+			if(isEmpty()){
+				printf("Invalid postfix expression.\n");
+				return;
 			}
 			a = pop();
 			if(isEmpty()){
@@ -52,4 +40,37 @@ void evaluatePostfix(char * e) {
 				result = b - a;
 				break;
 				case '*':
+				result = b * a;
+				break;
+				case '/':
+				result = b / a;
+				case '%':
+				result = b % a;
+				break;
+			}
+			push(result);
+		}
+		e++;
+	}
+	if(isEmpty()){
+		printf("Invalid postfix expression.\n");
+		return;
+	}
+	result = pop();
+	if(!isEmpty()) {
+		printf("Invalid postfix expression.\n");
+		return;
+	}
+	printf("Result : %d\n",result);
+}
+
+//Read a postfix expression and evaluate it.
+int main() {
+	char exp[20];
+	char *e, x;
+	printf("Enter the postfix expression : ");
+	scanf("%s",exp);
+	e = exp;
+	evaluatePostfix(e);
+
 }
