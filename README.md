@@ -59,7 +59,6 @@ And more. Each file demonstrates a specific concept or algorithm in C.
 
    ```bash
    cd path/to/repo
-````
 
 2. Compile a C program using `gcc` (or your favorite compiler). Example:
 
